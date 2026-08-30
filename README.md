@@ -3,7 +3,6 @@
 My personal developer portfolio showcasing my projects, 
 skills, and experience as a Backend & SQL Developer.
 
-🔗 Live site: [portfolio-mariamomani.vercel.app](https://portfolio-mariamomani.vercel.app)
 
 ## Built With
 - HTML5 & CSS3
