@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maria Momani – Backend & SQL Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0D1117;
+      --surface: #161B22;
+      --border: #21262D;
+      --accent: #2F81F7;
+      --accent-dim: rgba(47,129,247,0.12);
+      --text: #E6EDF3;
+      --muted: #8B949E;
+      --tag-bg: #1C2128;
+      --tag-text: #79C0FF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 0 2rem;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .nav-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .nav-links { display: flex; gap: 1.75rem; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* SECTIONS */
+    section { padding: 5rem 0; }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding-top: 56px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-name {
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-role {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--muted);
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-desc {
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.6rem 1.25rem;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #388bfd; text-decoration: none; color: #fff; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+    .hero-stack {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-top: 3rem;
+    }
+
+    .stack-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      border: 1px solid var(--border);
+      letter-spacing: 0.01em;
+    }
+
+    /* SECTION TITLE */
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 2.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .about-text p { color: var(--muted); margin-bottom: 1rem; }
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .about-facts { display: flex; flex-direction: column; gap: 1rem; }
+
+    .fact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+    }
+
+    .fact-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 0.25rem;
+    }
+
+    .fact-value { font-size: 14px; font-weight: 500; }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+
+    .skill-group-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .skill-list {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+    }
+
+    .skill-pill {
+      font-size: 12px;
+      padding: 0.2rem 0.6rem;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+    }
+
+    /* PROJECTS */
+    .projects-list { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .project-card:hover { border-color: var(--accent); }
+
+    .project-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 0.6rem;
+      flex-wrap: wrap; gap: 0.5rem;
+    }
+
+    .project-name { font-size: 1rem; font-weight: 600; }
+    .project-sub { font-size: 12px; color: var(--muted); margin-top: 0.1rem; }
+
+    .project-links { display: flex; gap: 0.75rem; }
+    .project-links a {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .project-links a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      text-decoration: none;
+    }
+
+    .project-desc { color: var(--muted); font-size: 14px; margin-bottom: 1rem; line-height: 1.7; }
+
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .project-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      background: var(--accent-dim);
+      color: var(--tag-text);
+      border: 1px solid rgba(47,129,247,0.2);
+    }
+
+    /* EXPERIENCE */
+    .exp-list { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .exp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+
+    .exp-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      flex-wrap: wrap; gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .exp-title { font-weight: 600; font-size: 1rem; }
+    .exp-company { color: var(--accent); font-size: 14px; margin-top: 0.1rem; }
+    .exp-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .exp-bullets { list-style: none; padding: 0; }
+    .exp-bullets li {
+      color: var(--muted);
+      font-size: 14px;
+      padding: 0.2rem 0 0.2rem 1.2rem;
+      position: relative;
+      line-height: 1.7;
+    }
+    .exp-bullets li::before {
+      content: '→';
+      position: absolute; left: 0;
+      color: var(--accent);
+      font-size: 12px;
+      top: 0.35rem;
+    }
+
+    /* CERTIFICATIONS */
+    .cert-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+
+    .cert-name { font-weight: 600; font-size: 15px; }
+    .cert-issuer { color: var(--muted); font-size: 13px; margin-top: 0.2rem; }
+    .cert-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      background: var(--accent-dim);
+      color: var(--tag-text);
+      border: 1px solid rgba(47,129,247,0.3);
+      white-space: nowrap;
+    }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .contact-intro { color: var(--muted); line-height: 1.8; }
+    .contact-links { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 0.6rem;
+      color: var(--muted); font-size: 14px;
+      transition: color 0.2s;
+    }
+    .contact-link:hover { color: var(--accent); text-decoration: none; }
+    .contact-link-icon {
+      width: 32px; height: 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+
+    .contact-form { display: flex; flex-direction: column; gap: 0.75rem; }
+    .form-input, .form-textarea {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.65rem 1rem;
+      color: var(--text);
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s;
+      outline: none;
+      width: 100%;
+    }
+    .form-input:focus, .form-textarea:focus { border-color: var(--accent); }
+    .form-textarea { resize: vertical; min-height: 120px; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      section { padding: 3.5rem 0; }
+    }
+
+    /* ANIMATIONS */
+    @media (prefers-reduced-motion: no-preference) {
+      .fade-in {
+        opacity: 0;
+        transform: translateY(16px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .fade-in.visible { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-name">maria-momani.dev</span>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <p class="hero-eyebrow">// hello, world</p>
+    <h1 class="hero-name">Maria Momani</h1>
+    <p class="hero-role">Backend & SQL Developer · Amman, Jordan</p>
+    <p class="hero-desc">
+      Computer Science graduate building reliable backend systems with ASP.NET Core, C#, and SQL Server.
+      Hands-on ERP experience, Microsoft Azure certified, and passionate about clean, database-driven software.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View My Work</a>
+      <a href="mailto:mariamomani04@gmail.com" class="btn btn-outline">Get In Touch</a>
+    </div>
+    <div class="hero-stack">
+      <span class="stack-tag">ASP.NET Core</span>
+      <span class="stack-tag">C#</span>
+      <span class="stack-tag">SQL Server</span>
+      <span class="stack-tag">Entity Framework Core</span>
+      <span class="stack-tag">REST APIs</span>
+      <span class="stack-tag">JWT Auth</span>
+      <span class="stack-tag">ERP / SAP</span>
+      <span class="stack-tag">Azure AZ-900</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container fade-in">
+    <p class="section-label">01 / about</p>
+    <h2 class="section-title">A bit about me</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a Computer Science graduate from Zarqa University who enjoys building things that work — properly.
+          My focus is backend and SQL development: designing databases, writing stored procedures, building APIs, and making sure data flows correctly and reliably.
+        </p>
+        <p>
+          At Cloud Data Solutions, I work daily with SQL Server supporting an enterprise ERP system integrated with SAP — writing queries, investigating sync failures, and maintaining data across distribution, sales, and CRM modules.
+        </p>
+        <p>
+          I independently built two complete web systems from scratch: WorkCraft and Mentora. I'm proud of both because they're real, not just tutorials.
+        </p>
+      </div>
+      <div class="about-facts">
+        <div class="fact-card">
+          <div class="fact-label">Location</div>
+          <div class="fact-value">Amman, Jordan</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Education</div>
+          <div class="fact-value">BSc Computer Science · Zarqa University · 2026 · GPA 82.8</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Certification</div>
+          <div class="fact-value">Microsoft Azure Fundamentals (AZ-900) · July 2026</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Languages</div>
+          <div class="fact-value">Arabic (Native) · English (Fluent)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container fade-in">
+    <p class="section-label">02 / skills</p>
+    <h2 class="section-title">Technical skills</h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Database</div>
+        <div class="skill-list">
+          <span class="skill-pill">SQL Server</span>
+          <span class="skill-pill">T-SQL</span>
+          <span class="skill-pill">SSMS</span>
+          <span class="skill-pill">Stored Procedures</span>
+          <span class="skill-pill">DB Design</span>
+          <span class="skill-pill">EF Core</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Backend</div>
+        <div class="skill-list">
+          <span class="skill-pill">ASP.NET Core</span>
+          <span class="skill-pill">ASP.NET MVC</span>
+          <span class="skill-pill">REST APIs</span>
+          <span class="skill-pill">JWT Auth</span>
+          <span class="skill-pill">RBAC</span>
+          <span class="skill-pill">C#</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Frontend</div>
+        <div class="skill-list">
+          <span class="skill-pill">HTML5</span>
+          <span class="skill-pill">CSS3</span>
+          <span class="skill-pill">JavaScript</span>
+          <span class="skill-pill">jQuery</span>
+          <span class="skill-pill">AJAX</span>
+          <span class="skill-pill">Bootstrap 5</span>
+          <span class="skill-pill">Razor Views</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Cloud & Tools</div>
+        <div class="skill-list">
+          <span class="skill-pill">Azure (AZ-900)</span>
+          <span class="skill-pill">Git</span>
+          <span class="skill-pill">GitHub</span>
+          <span class="skill-pill">Postman</span>
+          <span class="skill-pill">ERP / SAP</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Other</div>
+        <div class="skill-list">
+          <span class="skill-pill">Unity</span>
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">Clean Code</span>
+          <span class="skill-pill">MVC Pattern</span>
+          <span class="skill-pill">Debugging</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container fade-in">
+    <p class="section-label">03 / projects</p>
+    <h2 class="section-title">Things I've built</h2>
+    <div class="projects-list">
+
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <div class="project-name">WorkCraft – Employee Management System</div>
+            <div class="project-sub">Cloud Data Solutions · Feb 2026 – Apr 2026</div>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/MariaMomani/WorkCraft" target="_blank">GitHub →</a>
+          </div>
+        </div>
+        <p class="project-desc">
+          Full-stack employee task management application built independently during my internship.
+          Features a 10-table relational database, role-based access control, live KPI dashboards,
+          real-time AJAX notifications, and a complete task lifecycle workflow — delivered in 3 months.
+        </p>
+        <div class="project-tags">
+          <span class="project-tag">ASP.NET MVC 5</span>
+          <span class="project-tag">C#</span>
+          <span class="project-tag">Entity Framework 6</span>
+          <span class="project-tag">SQL Server</span>
+          <span class="project-tag">Bootstrap 5</span>
+          <span class="project-tag">jQuery</span>
+          <span class="project-tag">AJAX</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <div class="project-name">Mentora – Academic & Career Guidance Platform</div>
+            <div class="project-sub">Graduation Project · Oct 2025 – Jan 2026</div>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/MariaMomani/Backend-For-Mentora" target="_blank">GitHub →</a>
+          </div>
+        </div>
+        <p class="project-desc">
+          Designed and implemented the complete backend architecture for an academic guidance platform.
+          Delivered 14 RESTful API endpoints across 2 modules — Study Planner and Career Path Advisor —
+          with JWT-based authentication, role-based access control, and a layered service architecture.
+        </p>
+        <div class="project-tags">
+          <span class="project-tag">ASP.NET Core Web API</span>
+          <span class="project-tag">C#</span>
+          <span class="project-tag">JWT Auth</span>
+          <span class="project-tag">Entity Framework Core</span>
+          <span class="project-tag">SQL Server</span>
+          <span class="project-tag">REST APIs</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <div class="project-name">MarShi Ninja – 2D Action Game</div>
+            <div class="project-sub">Personal Project · Presented at Pocket Gamer Event, Aqaba 2025</div>
+          </div>
+          <div class="project-links">
+            <a href="https://play.unity.com/" target="_blank">Play →</a>
+          </div>
+        </div>
+        <p class="project-desc">
+          2D action game built in Unity featuring a ninja character, sword-based combat, multiple enemy types,
+          enemy AI, health systems, scene transitions, and 5 playable stages including 2 tutorial levels.
+          Selected to represent Zarqa University at Pocket Gamer Event 2025.
+        </p>
+        <div class="project-tags">
+          <span class="project-tag">Unity</span>
+          <span class="project-tag">C#</span>
+          <span class="project-tag">Game AI</span>
+          <span class="project-tag">2D Animation</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container fade-in">
+    <p class="section-label">04 / experience</p>
+    <h2 class="section-title">Where I've worked</h2>
+    <div class="exp-list">
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Technical Support Specialist</div>
+            <div class="exp-company">Cloud Data Solutions</div>
+          </div>
+          <div class="exp-date">May 2026 – Present</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Administer and maintain SQL Server databases supporting enterprise ERP operations integrated with SAP across distribution, sales, and CRM modules.</li>
+          <li>Write T-SQL queries and build detection queries daily to investigate and resolve ERP-to-SAP data synchronization failures.</li>
+          <li>Execute and analyze stored procedures to manage driver and route assignments, and load operational data from Excel into staging tables.</li>
+          <li>Maintain customer credit classification records within the ERP's CRM module, ensuring data integrity across the sales workflow.</li>
+          <li>Support GPS tracking deployment for field sales representatives using a mobile SFA application.</li>
+        </ul>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Software Development Intern</div>
+            <div class="exp-company">Cloud Data Solutions</div>
+          </div>
+          <div class="exp-date">Feb 2026 – Apr 2026</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Independently built WorkCraft, a full-stack employee task management system using ASP.NET MVC 5, C#, Entity Framework 6, and SQL Server — delivered within 3 months.</li>
+          <li>Designed a 10-table relational database schema from scratch and implemented role-based access control (RBAC).</li>
+          <li>Built live KPI dashboards, real-time AJAX notifications, and responsive UI with Bootstrap 5 and Razor views.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- CERT -->
+    <div style="margin-top: 2.5rem;">
+      <p class="section-label" style="margin-bottom: 1rem;">certifications</p>
+      <div class="cert-card">
+        <div>
+          <div class="cert-name">Microsoft Certified: Azure Fundamentals</div>
+          <div class="cert-issuer">Microsoft · July 2026</div>
+        </div>
+        <span class="cert-badge">AZ-900</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container fade-in">
+    <p class="section-label">05 / contact</p>
+    <h2 class="section-title">Get in touch</h2>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-intro">
+          I'm currently open to new opportunities — backend, SQL, or full-stack developer roles in Amman or remote.
+          If you'd like to talk, feel free to reach out.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:mariamomani04@gmail.com" class="contact-link">
+            <span class="contact-link-icon">✉</span>
+            mariamomani04@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/maria-momani" target="_blank" class="contact-link">
+            <span class="contact-link-icon">in</span>
+            linkedin.com/in/maria-momani
+          </a>
+          <a href="https://github.com/MariaMomani" target="_blank" class="contact-link">
+            <span class="contact-link-icon">gh</span>
+            github.com/MariaMomani
+          </a>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <input class="form-input" type="text" placeholder="Your name" required />
+        <input class="form-input" type="email" placeholder="Your email" required />
+        <textarea class="form-textarea" placeholder="Your message" required></textarea>
+        <button type="submit" class="btn btn-primary" style="align-self: flex-start;">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Maria Momani · Built with HTML & CSS · Deployed on Vercel</p>
+</footer>
+
+<script>
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Contact form (mailto fallback since no backend)
+  function handleSubmit(e) {
+    e.preventDefault();
+    const name = e.target[0].value;
+    const email = e.target[1].value;
+    const msg = e.target[2].value;
+    window.location.href = `mailto:mariamomani04@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(msg)}%0A%0AFrom: ${encodeURIComponent(email)}`;
+  }
+</script>
+
+</body>
+</html>
